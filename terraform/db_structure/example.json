@@ -1,0 +1,15 @@
+{
+    "size": [
+        "S",
+        "M",
+        "L",
+        "X",
+        "XL"
+    ],
+    "colour": [
+        "red",
+        "blue",
+        "green",
+        "yellow"
+    ]
+}

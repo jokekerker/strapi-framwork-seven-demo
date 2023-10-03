@@ -1,0 +1,48 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-multi-db-service
+  namespace: framwork-demo-dev
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 5432
+    targetPort: 5432
+    protocol: TCP
+  selector:
+    app: postgres-multi-db
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres-multi-db-deployment
+  namespace: framwork-demo-dev
+  labels:
+    app: postgres-multi-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres-multi-db
+  template:
+    metadata:
+      labels:
+        app: postgres-multi-db
+    spec:
+      containers:
+      - name: postgres-multi-db-container
+        image: 010854002138.dkr.ecr.ap-southeast-2.amazonaws.com/postgres_multi_db
+        imagePullPolicy: Always
+        env:
+        - name: POSTGRES_PASSWORD
+          value: "Strapi#1234"
+        - name: POSTGRES_MULTIPLE_DATABASES
+          value: "strapi-framwork-seven"
+        - name: POSTGRES_USER
+          value: "strapi"
+        ports:
+          - name: web
+            containerPort: 5432
+      imagePullSecrets:
+          - name: regcred

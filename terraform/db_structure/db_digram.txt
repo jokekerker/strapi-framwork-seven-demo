@@ -1,0 +1,106 @@
+Table members as U {
+  id int [pk, increment] 
+  email varchar
+  user varchar
+  password varchar
+  first_name varchar
+  last_name varchar
+  address1 varchar
+  address2 varchar
+  suburb varchar
+  state varchar
+  postcode varchar
+  country_id int [ref: > countries.id] 
+  phone_no varchar
+  created_at datetime [default: `now()`]
+  updated_at datetime [default: `now()`]
+}
+
+Table seesion_members {
+  id int [pk,increment]
+  member_id int [ref: > members.id]
+  session varchar
+  created_at datetime [default: `now()`]
+}
+
+Table countries {
+  id int [pk]
+  name varchar
+  created_at datetime [default: `now()`]
+  updated_at datetime [default: `now()`]
+}
+
+Enum orders_status {
+  checking_out [note: 'default status']
+  paid
+}
+
+Table orders {
+  id int [pk] 
+  member_id int [not null, unique, ref: > members.id]
+  status orders_status [default: 'checking_out'] 
+  updated_at varchar [note: 'When order updated'] 
+  created_at varchar [note: 'When order created'] 
+}
+
+Table order_items {
+  order_id int [ref: > orders.id] 
+  product_id int [ref: > products.id]
+  quantity int [default: 1] 
+  options_json varchar
+  updated_at datetime [default: `now()`]
+  created_at datetime [default: `now()`]
+}
+
+Table product_tags {
+  id int [pk]
+  name varchar
+}
+
+Table product_tags_product_ref {
+  product_id int [ref: > products.id]
+  product_tag_id int [ref: > product_tags.id]
+}
+
+Table products {
+  id int [pk]
+  title varchar
+  sale_price double
+  detail varchar
+  options_json varchar
+  image_url varchar
+  out_of_stock boolean
+  out_of_sale boolean
+  created_at datetime [default: `now()`]
+  updated_at datetime [default: `now()`]
+}
+
+Table stock {
+  id int [pk,increment]
+  name varchar
+  product_id int [not null, ref: > products.id]
+  price int
+  quantity int [default: 1] 
+  created_at datetime [default: `now()`]
+}
+
+Enum stock_move_type {
+  picking_in
+  picking_out
+  internal_picking
+}
+
+Table stock_move {
+  id int [pk,increment]
+  stock_id int [ref: > stock.id]
+  name varchar
+  order_id int [ref: > orders.id]
+  product_id int [not null, ref: > products.id]
+  type stock_move_type
+  quantity int [default: 0] 
+  updated_at datetime [default: `now()`]
+  created_at datetime [default: `now()`]
+}
+
+// Ref: product_tags.id <> products.id // many-to-many
+// //composite foreign key
