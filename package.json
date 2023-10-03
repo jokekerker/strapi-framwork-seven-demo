@@ -1,8 +1,18 @@
 {
-  "name": "@strapi/starters-and-templates",
+  "name": "starters-framework-seven-demo",
   "version": "1.0.0",
   "private": true,
   "description": "All Strapi templates",
+  "scripts": {
+    "develop": "strapi develop",
+    "start": "strapi start",
+    "build": "strapi build",
+    "strapi": "strapi"
+  },
+  "engines": {
+    "node": ">=16.0.0 <=20.x.x",
+    "npm": ">=6.0.0"
+  },
   "repository": "https://github.com/strapi/starters-and-templates.git",
   "license": "MIT",
   "author": {
