@@ -1,21 +1,20 @@
+# Use an official Node.js runtime as a parent image
 FROM --platform=linux/amd64 node:18-alpine
-# Installing libvips-dev for sharp Compatibility
-RUN apk update && apk add --no-cache build-base gcc autoconf automake zlib-dev libpng-dev nasm bash vips-dev
 
-ARG NODE_ENV=development
-ENV NODE_ENV=${NODE_ENV}
+# Set the working directory in the container
+WORKDIR /app
 
-WORKDIR /opt/
-COPY package.json yarn.lock ./
-RUN yarn install
-# RUN yarn add --platform=linuxmusl --arch=arm64v8 sharp
-# RUN SHARP_IGNORE_GLOBAL_LIBVIPS=1 npm_config_arch=x64 npm_config_platform=linux yarn add sharp@0.32.1
-ENV PATH /opt/node_modules/.bin:$PATH
+# Copy package.json and package-lock.json to the container
+COPY package*.json ./
 
-WORKDIR /opt/app
+# Install Strapi dependencies
+RUN npm install
+
+# Copy the rest of the Strapi application source code to the container
 COPY . .
-RUN chown -R node:node /opt/app
-USER node
-RUN yarn build
+
+# Expose the port that Strapi will run on (usually 1337)
 EXPOSE 1337
-CMD ["yarn", "develop"]
+
+# Start the Strapi application when the container starts
+CMD ["npm", "start"]
