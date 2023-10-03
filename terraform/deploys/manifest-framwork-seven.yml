@@ -31,7 +31,7 @@ spec:
     spec:
       containers:
       - name: framework-seven-container
-        image: 010854002138.dkr.ecr.ap-southeast-2.amazonaws.com/framework-seven
+        image: 010854002138.dkr.ecr.ap-southeast-2.amazonaws.com/framework-seven-demo
         imagePullPolicy: Always
         ports:
           - name: web
