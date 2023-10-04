@@ -16,5 +16,4 @@ COPY . .
 # Expose the port that Strapi will run on (usually 1337)
 EXPOSE 1337
 
-# Start the Strapi application when the container starts
 CMD ["npm", "start"]
