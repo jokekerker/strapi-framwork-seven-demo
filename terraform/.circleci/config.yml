@@ -1,0 +1,16 @@
+version: 2.1
+jobs:
+  build:
+    docker:
+      - image: hashicorp/terraform:latest
+    steps:
+      - checkout
+      - run:
+          name: Initialize Terraform
+          command: terraform init
+      - run:
+          name: Terraform Plan
+          command: terraform plan -out=tfplan -input=false
+      - run:
+          name: Terraform Apply
+          command: terraform apply -input=false tfplan

@@ -1,4 +1,5 @@
 provider "aws" {
+  profile = "papatpon"
   region = local.region
 }
 
@@ -19,7 +20,7 @@ data "aws_caller_identity" "current" {}
 
 locals {
   
-  name   = "framwork-seven-eks"
+  name   = "framwork-7-eks"
   region = "ap-southeast-2"
 
   vpc_cidr = "10.0.0.0/16"
@@ -73,7 +74,7 @@ module "eks" {
   }
 
   eks_managed_node_groups = {
-    batyr-eks-test = {
+    demo-framework-7-eks = {
       min_size     = 1
       max_size     = 6
       desired_size = 1
@@ -87,7 +88,7 @@ module "eks" {
       }
 
       tags = {
-        ExtraTag = "batyr-eks-test"
+        ExtraTag = "demo-framework-7-eks"
       }
     }
   }
