@@ -6,13 +6,14 @@ jobs:
     executor: terraform/default
     steps:
       - terraform/validate:
-          path: ./terraform
+          path: .
       - terraform/plan:
-          path: ./terraform 
-          out: tfplan 
+          path: .
+          out: tfplan
       - terraform/apply:
-          path: ./terraform
+          path: .
           plan: tfplan
+    working_directory: ./terraform
 workflows:
   single-job-lifecycle:
     jobs:
