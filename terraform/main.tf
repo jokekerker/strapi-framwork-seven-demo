@@ -1,5 +1,8 @@
 provider "aws" {
+  profile = "papatpon"
   region = local.region
+  access_key = "AKIAQFBXS5XNL2LSYQUZ"
+  secret_access_key = "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"
 }
 
 provider "kubernetes" {
