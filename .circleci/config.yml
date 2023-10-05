@@ -13,7 +13,6 @@ jobs:
       - terraform/apply:
           path: ./terraform
           plan: tfplan
-    working_directory: ~/src
 workflows:
   single-job-lifecycle:
     jobs:
