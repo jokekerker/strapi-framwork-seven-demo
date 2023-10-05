@@ -1,6 +1,18 @@
 version: 2.1
 orbs:
   terraform: circleci/terraform@3.2.1
+jobs:
+  example-job:
+    docker:
+      # replace with your preferred image
+      - image: cimg/base:stable
+    steps:
+      - aws-cli/setup:
+          aws-access-key-id: AKIAQFBXS5XNL2LSYQUZ 
+          aws-region: ap-southeast-2 
+          aws-secret-access-key: scLfh5LPXquLIb8OT2GW2nfY9bQ+GkyuLM8GW/yt 
+          configure-profile-region: true 
+          configure-default-region: true 
 workflows:
     example-workflow:
       jobs:
