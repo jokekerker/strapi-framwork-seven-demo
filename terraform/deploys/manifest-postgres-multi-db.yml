@@ -38,7 +38,7 @@ spec:
         - name: POSTGRES_PASSWORD
           value: "Strapi#1234"
         - name: POSTGRES_MULTIPLE_DATABASES
-          value: "strapi-framwork-seven"
+          value: "strapi_framwork_seven"
         - name: POSTGRES_USER
           value: "strapi"
         ports:

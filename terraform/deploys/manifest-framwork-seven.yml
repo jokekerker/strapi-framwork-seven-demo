@@ -6,8 +6,8 @@ metadata:
 spec:
   type: LoadBalancer
   ports:
-  - port: 3000
-    targetPort: 3000
+  - port: 5173
+    targetPort: 5173
     protocol: TCP
   selector:
     app: framework-seven
@@ -35,6 +35,6 @@ spec:
         imagePullPolicy: Always
         ports:
           - name: web
-            containerPort: 3000
+            containerPort: 5173
       imagePullSecrets:
           - name: regcred
