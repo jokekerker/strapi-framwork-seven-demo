@@ -17,7 +17,7 @@ workflows:
             requires:
               - terraform/validate
         - terraform/apply:
-            attach-workplace: true
+            attach-workspace: true
             path: ./terraform
             plan: tfplan
             context: terraform
