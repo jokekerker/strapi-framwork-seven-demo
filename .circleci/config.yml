@@ -1,25 +1,53 @@
 version: 2.1
 orbs:
+  aws-cli: circleci/aws-cli@2.0.3
   terraform: circleci/terraform@3.2.1
+jobs:
+  example-job:
+    docker:
+      # replace with your preferred image
+      - image: cimg/base:stable
+    parameters:
+      aws-access-key-id:
+          default: AWS_ACCESS_KEY_ID
+          description: aws access key id override
+          type: env_var_name
+      aws-region:
+          default: AWS_REGION
+          description: aws region override
+          type: env_var_name
+      aws-secret-access-key:
+          default: AWS_SECRET_ACCESS_KEY
+          description: aws secret access key override
+          type: env_var_name
+    steps:
+      - aws-cli/install:
+          disable-aws-pager: true 
+          override-installed: false 
+      - aws-cli/setup:
+          aws-access-key-id: << parameters.aws-access-key-id >>
+          aws-secret-access-key: << parameters.aws-secret-access-key >>
+          aws-region: << parameters.aws-region >>
 workflows:
-    example-workflow:
-      jobs:
-        - terraform/validate:
-            checkout: true
-            path: ./terraform
-            context: terraform
-        - terraform/plan:
-            checkout: true
-            context: terraform
-            persist-workspace: true
-            path: ./terraform 
-            out: tfplan 
-            requires:
-              - terraform/validate
-        - terraform/apply:
-            attach-workspace: true
-            path: ./terraform
-            plan: tfplan
-            context: terraform
-            requires:
-              - terraform/plan
+  example-workflow:
+    jobs:
+      - example-job
+      - terraform/validate:
+          checkout: true
+          path: ./terraform
+          context: terraform
+      - terraform/plan:
+          checkout: true
+          context: terraform
+          persist-workspace: true
+          path: ./terraform 
+          out: tfplan 
+          requires:
+            - terraform/validate
+      - terraform/apply:
+          attach-workspace: true
+          path: ./terraform
+          plan: tfplan
+          context: terraform
+          requires:
+            - terraform/plan
