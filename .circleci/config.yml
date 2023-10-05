@@ -4,14 +4,22 @@ orbs:
 workflows:
     example-workflow:
       jobs:
-        - terraform/init:
+        - terraform/validate:
+            checkout: true
             path: ./terraform
             context: terraform
         - terraform/plan:
+            checkout: true
+            context: terraform
+            persist-workspace: true
             path: ./terraform 
             out: tfplan 
-            context: terraform
+            requires:
+              - terraform/validate
         - terraform/apply:
+            attach-workplace: true
             path: ./terraform
             plan: tfplan
             context: terraform
+            requires:
+              - terraform/plan
