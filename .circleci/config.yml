@@ -6,9 +6,12 @@ workflows:
       jobs:
         - terraform/init:
             path: ./terraform
+            context: terraform
         - terraform/plan:
             path: ./terraform 
             out: tfplan 
+            context: terraform
         - terraform/apply:
             path: ./terraform
             plan: tfplan
+            context: terraform
