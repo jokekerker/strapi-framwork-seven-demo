@@ -1,5 +1,4 @@
 provider "aws" {
-  profile = "papatpon"
   region = local.region
 }
 
