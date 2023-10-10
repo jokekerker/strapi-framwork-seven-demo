@@ -36,11 +36,11 @@ spec:
         imagePullPolicy: Always
         env:
         - name: POSTGRES_PASSWORD
-          value: "Strapi#1234"
+          value: "$POSTGRES_PASSWORD"
         - name: POSTGRES_MULTIPLE_DATABASES
           value: "strapi_framwork_seven"
         - name: POSTGRES_USER
-          value: "strapi"
+          value: "$POSTGRES_USER"
         ports:
           - name: web
             containerPort: 5432

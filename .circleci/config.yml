@@ -28,16 +28,48 @@ jobs:
           path: ./terraform
       - terraform/plan:
           path: ./terraform
+          out: tfplan
+      - terraform/apply:
+          path: ./terraform
+          in: tfplan
+
+  kubectl-job:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - aws-cli/setup
+      - kubectl/install
+      - checkout
+      - run:
+          name: update kubeconfig in local
+          command: |
+            aws eks update-kubeconfig --name ex-batyr-eks --region ap-southeast-2 —-profile papatpon
+      - run:
+          name: apply env to Scripts
+          command: |
+            envsubst < ./terraform/deploys/manifest-postgres-multi-db.yml
+      - run:
+          name: deploy manifest-postgres-multi-db
+          command: |
+            kubectl apply -f ./terraform/deploys/manifest-postgres-multi-db.yml
 
 workflows:
-  build_and_push_image:
-    jobs:
+  # build_and_push_image:
+  #   jobs:
       # - aws-ecr/build-and-push-image:
       #     context: aws
       #     create-repo: true
       #     dockerfile: Dockerfile
       #     path: .
       #     repo: strapi-framework-7
-      - single-job-lifecycle:
-          context: aws
-      
+  # infra-deploy:
+  #   jobs:
+  #     - single-job-lifecycle:
+  #         context: aws
+  
+  deploy-service-to-eks:
+    jobs:
+      - kubectl-job:
+          context: 
+              - aws
+              - postgres-env-manifest
