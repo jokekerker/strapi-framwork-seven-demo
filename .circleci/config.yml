@@ -19,15 +19,15 @@ jobs:
           command: |
             cat ~/.aws/config && cat ~/.aws/credentials
             aws ec2 list-images-in-recycle-bin
-      # - terraform/install:
-      #     arch: amd64 
-      #     os: linux 
-      # - terraform/init:
-      #     path: ./terraform
-      # - terraform/validate:
-      #     path: ./terraform
-      # - terraform/plan:
-      #     path: ./terraform
+      - terraform/install:
+          arch: amd64 
+          os: linux 
+      - terraform/init:
+          path: ./terraform
+      - terraform/validate:
+          path: ./terraform
+      - terraform/plan:
+          path: ./terraform
 
 workflows:
   build_and_push_image:
