@@ -10,7 +10,10 @@ jobs:
     docker:
       - image: cimg/base:stable
     steps:
-      - aws-cli/setup
+      - aws-cli/install:
+          disable-aws-pager: true
+      - aws-cli/setup:
+          configure_default_region: true
       - checkout
       - terraform/install:
           arch: amd64 
