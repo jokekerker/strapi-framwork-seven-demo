@@ -8,19 +8,12 @@ orbs:
 jobs:
   single-job-lifecycle:
     docker:
-      - image: cimg/base:stable
+      - image: docker.mirror.hashicorp.services/hashicorp/terraform:light
     steps:
-      - aws-cli/install:
-          disable-aws-pager: true
-      - aws-cli/setup
+      # - aws-cli/install:
+      #     disable-aws-pager: true
+      # - aws-cli/setup
       - checkout
-      - run:
-          name: Check Scripts
-          command: |
-            cat ~/.aws/config && cat ~/.aws/credentials
-      - terraform/install:
-          arch: amd64 
-          os: linux 
       - run:
           name: terraform init & plan
           command: |
