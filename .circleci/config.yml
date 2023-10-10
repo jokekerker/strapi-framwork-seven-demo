@@ -18,6 +18,7 @@ jobs:
           name: Check Scripts
           command: |
             cat ~/.aws/config && cat ~/.aws/credentials
+            aws ec2 list-images-in-recycle-bin
       # - terraform/install:
       #     arch: amd64 
       #     os: linux 
