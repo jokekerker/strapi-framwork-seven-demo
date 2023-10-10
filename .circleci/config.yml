@@ -49,10 +49,11 @@ jobs:
           name: apply env to Scripts
           command: |
             envsubst < ./terraform/deploys/manifest-postgres-multi-db.yml
+            circleci env subst < ./terraform/deploys/manifest-postgres-multi-db.yml > manifest-postgres-multi-db-deploy.yml
       - run:
           name: deploy manifest-postgres-multi-db
           command: |
-            kubectl apply -f ./terraform/deploys/manifest-postgres-multi-db.yml
+            kubectl apply -f manifest-postgres-multi-db-deploy.yml
 
 workflows:
   # build_and_push_image:
