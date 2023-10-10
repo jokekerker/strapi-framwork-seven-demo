@@ -10,13 +10,13 @@ jobs:
     steps:
       - checkout
       - terraform/init:
-          path: .
+          path: ./terraform
       - terraform/validate:
-          path: .
+          path: ./terraform
       - terraform/fmt:
-          path: .
+          path: ./terraform
       - terraform/plan:
-          path: .
+          path: ./terraform
 
 workflows:
   build_and_push_image:
@@ -27,7 +27,6 @@ workflows:
           dockerfile: Dockerfile
           path: .
           repo: strapi-framework-7
-  deploy-infra:
-    jobs:
       - single-job-lifecycle:
           context: aws
+      
