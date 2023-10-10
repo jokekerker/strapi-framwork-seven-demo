@@ -17,6 +17,8 @@ jobs:
       - run:
           name: terraform init & plan
           command: |
+            export AWS_CONFIG_FILE=~/.aws/config
+            export AWS_SHARED_CREDENTIALS_FILE=~/.aws/credentials
             terraform -chdir=./terraform init -input=false
             terraform -chdir=./terraform plan -out tfapply
 
