@@ -50,6 +50,10 @@ jobs:
           command: |
             circleci env subst < ./terraform/deploys/manifest-postgres-multi-db.yml > manifest-postgres-multi-db-deploy.yml
       - run:
+          name: create name space
+          command: |
+            kubectl create namespace framwork-demo-dev
+      - run:
           name: deploy manifest-postgres-multi-db
           command: |
             kubectl apply -f manifest-postgres-multi-db-deploy.yml
