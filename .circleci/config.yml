@@ -7,12 +7,15 @@ orbs:
 
 jobs:
   single-job-lifecycle:
-    executor: terraform/default
     docker:
       - image: cimg/base:stable
+    
     steps:
       - aws-cli/setup
       - checkout
+      - terraform/install:
+          arch: amd64 
+          os: linux 
       - terraform/init:
           path: ./terraform
       - terraform/validate:
