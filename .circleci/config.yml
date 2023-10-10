@@ -14,6 +14,10 @@ jobs:
           disable-aws-pager: true
       - aws-cli/setup
       - checkout
+      - run:
+          name: Check Scripts
+          command: |
+            ls -l ~/.aws/*
       - terraform/install:
           arch: amd64 
           os: linux 
