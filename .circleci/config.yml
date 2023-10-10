@@ -2,15 +2,21 @@ version: 2.1
 
 orbs:
   aws-ecr: circleci/aws-ecr@8.1.3
-  terraform-v2: ovotech/terraform-v2@2.5.0
+  terraform: circleci/terraform@3.2.1
+
 jobs:
-  example-job:
-    docker:
-      # replace with your preferred image
-      - image: cimg/base:stable
+  single-job-lifecycle:
+    executor: terraform/default
     steps:
-      - terraform-v2/validate:
-          path: ./terraform 
+      - checkout
+      - terraform/init:
+          path: .
+      - terraform/validate:
+          path: .
+      - terraform/fmt:
+          path: .
+      - terraform/plan:
+          path: .
 
 workflows:
   build_and_push_image:
@@ -22,8 +28,6 @@ workflows:
           path: .
           repo: strapi-framework-7
   deploy-infra:
-      jobs:
-        - example-job
-        - terraform-v2/plan:
-            path: ./terraform
-            context: aws
+    jobs:
+      - single-job-lifecycle:
+          context: aws
