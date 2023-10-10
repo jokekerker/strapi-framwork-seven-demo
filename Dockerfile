@@ -18,9 +18,9 @@ ENV PATH /opt/node_modules/.bin:$PATH
 
 WORKDIR /opt/app
 COPY . .
-RUN rm -rf /opt/node_modules
+RUN ls -l /opt/app
+RUN yarn build
 RUN chown -R node:node /opt/app
 USER node
-RUN ["yarn", "build"]
 EXPOSE 1337
 CMD ["yarn", "develop"]
