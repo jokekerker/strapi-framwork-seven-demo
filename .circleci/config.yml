@@ -8,6 +8,8 @@ orbs:
 jobs:
   single-job-lifecycle:
     executor: terraform/default
+    docker:
+      - image: cimg/base:stable
     steps:
       - aws-cli/setup
       - checkout
