@@ -10,8 +10,6 @@ jobs:
     docker:
       - image: cimg/base:stable
     steps:
-      - aws-cli/install:
-          disable-aws-pager: true
       - aws-cli/setup
       - checkout
       - run:
