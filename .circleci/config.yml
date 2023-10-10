@@ -7,32 +7,40 @@ orbs:
 
 jobs:
   single-job-lifecycle:
-    working_directory: /tmp/project
     docker:
-      - image: docker.mirror.hashicorp.services/hashicorp/terraform:light
+      - image: cimg/base:stable
     steps:
-      # - aws-cli/install:
-      #     disable-aws-pager: true
-      # - aws-cli/setup
+      - aws-cli/install:
+          disable-aws-pager: true
+      - aws-cli/setup
       - checkout
       - run:
-          name: terraform init & plan
+          name: Check Scripts
           command: |
-            cat ~/.aws/config
-            export AWS_CONFIG_FILE=~/.aws/config
-            export AWS_SHARED_CREDENTIALS_FILE=~/.aws/credentials
-            terraform -chdir=./terraform init -input=false
-            terraform -chdir=./terraform plan -out tfapply
+            cat ~/.aws/config && cat ~/.aws/credential
+      - run:
+          name: check ec2 image
+          command: |
+            aws ec2 list-images-in-recycle-bin
+      # - terraform/install:
+      #     arch: amd64 
+      #     os: linux 
+      # - terraform/init:
+      #     path: ./terraform
+      # - terraform/validate:
+      #     path: ./terraform
+      # - terraform/plan:
+      #     path: ./terraform
 
 workflows:
   build_and_push_image:
     jobs:
-      - aws-ecr/build-and-push-image:
-          context: aws
-          create-repo: true
-          dockerfile: Dockerfile
-          path: .
-          repo: strapi-framework-7
+      # - aws-ecr/build-and-push-image:
+      #     context: aws
+      #     create-repo: true
+      #     dockerfile: Dockerfile
+      #     path: .
+      #     repo: strapi-framework-7
       - single-job-lifecycle:
           context: aws
       
