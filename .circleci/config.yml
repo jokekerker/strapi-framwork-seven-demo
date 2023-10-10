@@ -1,25 +1,14 @@
 version: 2.1
+
 orbs:
-  terraform: circleci/terraform@3.2.1
+  aws-ecr: circleci/aws-ecr@8.1.3
+
 workflows:
-    example-workflow:
-      jobs:
-        - terraform/validate:
-            checkout: true
-            path: ./terraform
-            context: terraform
-        - terraform/plan:
-            checkout: true
-            context: terraform
-            persist-workspace: true
-            path: ./terraform 
-            out: tfplan 
-            requires:
-              - terraform/validate
-        - terraform/apply:
-            attach-workspace: true
-            path: ./terraform
-            plan: tfplan
-            context: terraform
-            requires:
-              - terraform/plan
+  build_and_push_image:
+    jobs:
+      - aws-ecr/build-and-push-image:
+          context: aws
+          create-repo: true
+          dockerfile: Dockerfile
+          path: .
+          repo: strapi-framework-7
