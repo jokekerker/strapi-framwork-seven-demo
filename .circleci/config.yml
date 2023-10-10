@@ -9,7 +9,6 @@ jobs:
   single-job-lifecycle:
     docker:
       - image: cimg/base:stable
-    
     steps:
       - aws-cli/setup
       - checkout
