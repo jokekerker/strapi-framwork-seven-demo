@@ -31,12 +31,12 @@ jobs:
 workflows:
   build_and_push_image:
     jobs:
-      - aws-ecr/build-and-push-image:
-          context: aws
-          create-repo: true
-          dockerfile: Dockerfile
-          path: .
-          repo: strapi-framework-7
+      # - aws-ecr/build-and-push-image:
+      #     context: aws
+      #     create-repo: true
+      #     dockerfile: Dockerfile
+      #     path: .
+      #     repo: strapi-framework-7
       - single-job-lifecycle:
           context: aws
       
