@@ -7,6 +7,13 @@ terraform {
   }
 }
 provider "aws" {
+
+  default_tags {
+     tags = {
+       hashicorp-learn = "circleci"
+     }
+   }
+
   shared_config_files = ["~/.aws/config"]
   shared_credentials_files = ["~/.aws/credentials"]
   region = local.region
