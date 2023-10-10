@@ -18,7 +18,8 @@ ENV PATH /opt/node_modules/.bin:$PATH
 
 WORKDIR /opt/app
 COPY . .
-RUN ls -l /opt/app
+RUN rm -rf /opt/app/build
+RUN rm -rf /opt/app/node_modules
 RUN yarn build
 RUN chown -R node:node /opt/app
 USER node
