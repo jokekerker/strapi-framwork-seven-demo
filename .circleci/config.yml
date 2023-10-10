@@ -44,7 +44,7 @@ jobs:
       - run:
           name: update kubeconfig in local
           command: |
-            aws eks update-kubeconfig --name ex-batyr-eks --region ap-southeast-2
+            aws eks update-kubeconfig --name framwork-7-eks --region ap-southeast-2
       - run:
           name: apply env to Scripts
           command: |
