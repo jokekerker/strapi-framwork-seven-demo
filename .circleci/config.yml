@@ -12,8 +12,7 @@ jobs:
     steps:
       - aws-cli/install:
           disable-aws-pager: true
-      - aws-cli/setup:
-          configure_default_region: true
+      - aws-cli/setup
       - checkout
       - terraform/install:
           arch: amd64 
